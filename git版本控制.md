@@ -31,7 +31,7 @@ git remote add orgin "https://gitee.com/enomix/odoo12.git"#链接到码云，这
 
 ```
 
-
+ 
 
 
 
