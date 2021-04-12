@@ -27,7 +27,7 @@ git remote -v #查看fentch push的地址, orgin为远程地址的别名
 
 git push origin master #推送到github里面，第一次连接到github需要登录授权
 
-git remote add orgin "https://gitee.com/enomix/odoo12.git"#链接到码云，这样GitHub和码云都能同时看到上传的东西了，同样码云第一次链接也需要登录授权
+git remote add orgin "https://gitee.com/enomix/odoo12.git"#链接到码云，同样码云第一次链接也需要登录授权
 
 ```
 
