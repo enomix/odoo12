@@ -13,8 +13,8 @@ sudo su -c "createuser -s $USER" postgres # 创建数据库超级用户
 安装odoo12所需的系统依赖
 
 ```shell
-sudo apt update
-sudo apt upgrade
+sudo apt update #查看哪些软件需要更新
+sudo apt upgrade #执行更新到最新软件版本，与刚才查看的哪些软件需要更新进行对比
 sudo apt install git -y #安装Git
 sudo apt install python3-dev python3-pip -y # 安装Python3 for dev和pip3
 sudo apt install build-essential libxslt-dev libzip-dev libldap2-dev libsasl2-dev libssl-dev -y # 安装依赖包
