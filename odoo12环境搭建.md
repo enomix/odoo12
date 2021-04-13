@@ -1,3 +1,5 @@
+### 安装配置
+
 安装Ubuntu18桌面版
 
 安装PostgreSQL数据库
@@ -54,4 +56,23 @@ http://[用户名]:8069
 
 
 参考：https://www.toutiao.com/i6771961036133106184/?in_ogs=1&traffic_source=CS1114&utm_source=HW&source=search_tab&utm_medium=wap_search&prevent_activate=1&original_source=1&in_tfs=HW&channel=
+
+
+
+### 常见问题
+
+Linux的IP能与windows 互相 ping 通，但是xhell连接不上Linux，pycharm也连接不上Linux
+
+可能的原因就是ssh相关的服务没有安装
+
+```shell
+ps -e | grep ssh #检查ssh是否安装了
+
+sudo apt-get install openssh-server#安装ssh服务
+
+/etc/init.d/ssh start #启动ssh服务
+
+#出现问题时可以重启ssh服务
+sudo service ssh restart
+```
 
