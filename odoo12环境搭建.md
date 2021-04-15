@@ -76,3 +76,8 @@ sudo apt-get install openssh-server#安装ssh服务
 sudo service ssh restart
 ```
 
+### 连接pycharm开发
+
+可以在windows下安装pycharm专业版
+
+或者在Linux下安装社区版（免费）
