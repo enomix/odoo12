@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<odoo>
+    <!--显示在左侧下拉菜单中-->
+    <!--菜单项(顶级菜单)-->
+    <menuitem id="library_menu"
+              name="图书馆"/>
+
+
+    <!--res_model视图要操作哪个数据模型：模块.数据模型-->
+    <!--view_mode依次用什么视图来打开这个数据模型-->
+    <!--打开book list的动作-->
+    <act_window id="action_library_book"
+                name="Library Books"
+                res_model="library.book"
+                view_mode="tree,form"
+    />
+
+
+    <!--打开book list的菜单（二级菜单）-->
+    <!--action:动作-->
+    <!--parent:父视图-->
+    <menuitem id="menu_library_book"
+              name="Book"
+              action="action_library_book"
+              parent="library_menu"/>
+
+
+    <act_window id="action_library_categ"
+                name="Categories"
+                res_model="library.book.category"
+                view_mode="tree,form"
+    />
+
+    <menuitem id="menu_library_categ"
+              name="Categories"
+              action="action_library_categ"
+              parent="library_menu"/>
+    />
+
+</odoo>

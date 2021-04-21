@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+<!--    &lt;!&ndash; 在ir.module.category创建疫情记录应用的分类&ndash;&gt;-->
+<!--    <record id="module_record_category" model="ir.module.category">-->
+<!--        <field name="name">epidemic_record</field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash;添加安全组　如下添加了用户组&ndash;&gt;-->
+<!--    <record id="record_group_user" model="res.groups">-->
+<!--        <field name="name">User</field>-->
+<!--        <field name="category_id" ref="module_record_category"/>-->
+<!--        <field name="implied_ids" eval="[(4,ref('base.group_user'))]"/>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash; 创建管理组&ndash;&gt;-->
+<!--    <record id="reocrd_group_manager" model="res.groups">-->
+<!--        <field name="name">Manager</field>-->
+<!--        <field name="category_id" ref="module_record_category"/>-->
+<!--        <field name="implied_ids" eval="[(4,ref('record_group_user'))]"/>-->
+<!--        <field name="users" eval="[-->
+<!--                    (4,ref('base.user_root')),-->
+<!--                    (4,ref('base.user_admin'))-->
+<!--        ]"/>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash;添加行级权限规则,记录规则在ir.rule中定义&ndash;&gt;-->
+<!--    <data noupdate="1">-->
+<!--        <record id="record_user_rule" model="ir.rule">-->
+<!--            <field name="name">Epidemic Record User Access</field>-->
+<!--            <field name="model_id" ref="model_epidemic_record"/>-->
+<!--            <field name="domain_force">-->
+<!--                [('active','=',True)]-->
+<!--            </field>-->
+<!--            &lt;!&ndash;元组(4, x)表示x应添加到记录中,此处x为一个标记为base.group_user的内部用户组引用&ndash;&gt;-->
+<!--            <field name="groups" eval="[(4,ref('record_group_user'))]"/>-->
+<!--        </record>-->
+<!--    </data>-->
+</odoo>

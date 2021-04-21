@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <!--添加安全组,权限安全相关的文件通常放在模块下/security子目录中-->
+
+    <!--1.在ir.module.category模型中创建针对图书应用的分类-->
+    <record id="module_library_category" model="ir.module.category">
+        <field name="name">Library</field>
+    </record>
+
+    <!--2.添加两个安全组-->
+    <!--首先添加用户组 Library User Group -->
+    <record id="library_group_user" model="res.groups">
+        <!--添加了三个字段,name是组名-->
+        <field name="name">User</field>
+        <!--关联应用,这个是关联字段,使用了ref属性来通过XML ID连接已创建的分类-->
+        <field name="category_id"
+               ref="module_library_category"/>
+        <!--这是一个一对多的关联字段one-to-many,-->
+        <field name="implied_ids"
+               eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+
+
+
+    <!--然后添加管理员组 Library Manager Group,授予它用户组的所有权限,以及其他权限 -->
+    <record id="library_group_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id"
+               ref="module_library_category"/>
+
+        <!--implied_id关联了library_group_user组,以继承其权限-->
+        <field name="implied_ids"
+               eval="[(4, ref('library_group_user'))]"/>
+        <field name="users"
+               eval="[(4, ref('base.user_root')),
+                  (4, ref('base.user_admin'))]"/>
+    </record>
+
+
+    <!--添加行级权限规则,记录规则在ir.rule中定义-->
+    <data noupdate="1">
+        <record id="book_user_rule" model="ir.rule">
+            <field name="name">Library Book User Access</field>
+            <field name="model_id" ref="model_library_book"/>
+            <field name="domain_force">
+                [('active','=',True)]
+            </field>
+            <!--元组(4, x)表示x应添加到记录中,此处x为一个标记为base.group_user的内部用户组引用-->
+            <field name="groups" eval="[(4,ref('library_group_user'))]"/>
+        </record>
+    </data>
+
+</odoo>

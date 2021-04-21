@@ -41,6 +41,30 @@ pip3 install -r ~/odoo-dev/odoo/requirements.txt # odoo指定包
 pip3 install --user num2words phonenumbers psycopg2-binary watchdog xlwt # 其他依赖包
 ```
 
+### 虚拟环境安装
+
+```shell
+#安装：
+pip3 install virtualenv
+
+#创建：
+virtualenv venv
+
+#执行这个目录下的active，进入虚拟环境
+source ./venv/bin/active
+
+#进入了虚拟环境之后，用户名前面就会出现(venv)这个标签，如下：
+(venv) sp@sp-virtual-machine:~/odoo-dev/odoo$
+
+#这个时候进入odoo源码的目录，可以看到有requirements.txt这个文件，这个文件包含了odoo所需要的全部依赖
+cd odoo/
+#执行下载（在虚拟环境venv下时）
+pip3 install -r requirements.txt
+#然后所需的依赖就下载到了venv的目录里面了，venv目录大小到了120多MB
+```
+
+
+
 启动odoo12的实例
 
 ```shell
@@ -58,6 +82,36 @@ http://[用户名]:8069
 参考：https://www.toutiao.com/i6771961036133106184/?in_ogs=1&traffic_source=CS1114&utm_source=HW&source=search_tab&utm_medium=wap_search&prevent_activate=1&original_source=1&in_tfs=HW&channel=
 
 
+
+### 远程开发odoo
+
+在Windows安装pycharm远程连接Linux里面的odoo进行开发
+
+#### 1.设置python解释器
+
+打开Settings>Project:pycharm>Pychon Interpreter>添加一个SSH Interpreter，
+
+设置Host地址，就是Linux的IP地址，然后填上用户名和密码，测试连接。
+
+设置Python interpreter path:Linux下面的venv里面的python解释器的地址
+
+设置PyCharm helpers path:home/用户名/.pycharm_helpers
+
+#### 2.设置地址
+
+Tools>Development>configration
+
+这里面也可以设置远程连接的地址
+
+#### 3.设置启动项
+
+点击run这里的edit然后进入
+
+设置Script path: Linux里面odoo目录下的odoo-bin
+
+设置Parameters:-c Linux里面odoo目录/debian/odoo.conf，没有则新建一个
+
+设置Working directory开发路径
 
 ### 常见问题
 
@@ -81,3 +135,4 @@ sudo service ssh restart
 可以在windows下安装pycharm专业版
 
 或者在Linux下安装社区版（免费）
+

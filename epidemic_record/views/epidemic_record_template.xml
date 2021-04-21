@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--网页访问模板http://sp-virtual-machine:8069/library/books-->
+    <!--该模板的控制器library_app/controllers/main.py-->
+    <template id="epidemic_record_template" name="epidemic record">
+        <div id="wrap" class="container">
+            <h1>记录</h1>
+            <t t-foreach="records" t-as="record">
+                <div class="row">
+                    <span t-field="record.name"/>,
+                    <span t-field="record.date"/>,
+                    <span t-field="city"/>
+                </div>
+            </t>
+        </div>
+    </template>
+
+</odoo>
