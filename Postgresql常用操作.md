@@ -20,13 +20,8 @@ postgres-#
 卸载postgresql
 
 ```shell
-sudo apt-get --purge remove postgresql\*
-
-sudo rm -r /etc/postgresql/
-sudo rm -r /etc/postgresql-common/
-sudo rm -r /var/lib/postgresql/
-sudo userdel -r postgres
-sudo groupdel postgres
+sudo apt-get purge 'postgresql-*'
+sudo apt-get autoremove 'postgresql-*'
 ```
 
 安装PostgreSQL数据库
@@ -36,6 +31,8 @@ sudo apt update #查看需要更新哪些软件，可以先不执行，因为在
 #参考https://blog.csdn.net/dream_follower/article/details/90311799
 
 sudo apt install postgresql -y # 安装PostgreSQL
-sudo su -c "createuser -s $USER" postgres # 创建数据库超级用户
+sudo -u postgres psql#打开postgre数据库
+ALTER USER postgres WITH PASSWORD '123456'; #修改数据库用户密码
+
 ```
 

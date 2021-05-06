@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+
+<odoo>
+
+
+    <!--tree视图-->
+    <record id="employee_record_tree_view" model="ir.ui.view">
+        <field name='name'>员工记录</field>
+        <field name="model">employee.record</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="date"/>
+                <field name="state"/>
+                <field name="city"/>
+                <field name="country"/>
+                <field name="street"/>
+                <field name="email"/>
+                <field name="phone_number"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!--form视图-->
+    <record id="employee_record_form_view" model="ir.ui.view">
+        <field name="name">员工记录</field>
+        <field name="model">employee.record</field>
+        <!--name="arch"代表了下面的代码是我们真正要执行的代码，界面要显示的定义的视图-->
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <!--required="1"代表了这个字段是必填项,默认是0-->
+                            <field name="name" string="姓名" required="1"/>
+                            <field name="date" string="入职日期" required="1"/>
+                            <field name="is_working" string="是否在职" required="1"/>
+                            <!--invisible="1"代表了这个字段是隐藏项,默认是0-->
+                            <!--要实现动态显示使用attrs属性:里面放一个字典,根据上面的布尔类型的字段控制当前的字段是否显示-->
+                            <field name="leaving_reason" string="离职原因"
+                                   attrs="{'required': [('is_working', '=', False)], 'invisible': [('is_working', '=', True)]}"/>
+                            <field name="email" string="邮箱"
+                                   attrs="{'required': [('is_working', '=', True)], 'invisible': [('is_working', '=', False)]}"/>
+                            <field name="phone_number" string="手机"
+                                   attrs="{'required': [('is_working', '=', True)], 'invisible': [('is_working', '=', False)]}"/>
+                            <field name="position" string="职位"
+                                   attrs="{'required': [('is_working', '=', True)],  'invisible': [('is_working', '=', False)]}"/>
+                        </group>
+                        <group>
+                            <field name="sex" string="性别" required="1"/>
+                            <field name="age" string="年龄" required="1"/>
+                            <field name="state" string="省" required="1"/>
+                            <field name="city" string="市" required="1"/>
+                            <field name="country" string="区/县"/>
+                            <field name="street" string="家庭地址" required="1"/>
+                            <!--readonly="1"代表了这个字段是只读字段,不可编辑的,默认是0-->
+                            <field name="create_user_id" string="填报人" readonly="1"/>
+                            <field name="fuzhu_create_user_ids" string="辅助填报人" widget="many2many_tags"
+                                   options="{'no_create': True, 'no_edit': True}"/>
+                        </group>
+                    </group>
+
+                    <!--备注的字段类型-->
+                    <notebook>
+                        <page string="说明">
+                            <field name="note" placeholder="这个是默认显示的信息"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--搜索视图-->
+    <record id="employee_record_search_view" model="ir.ui.view">
+        <field name="name">员工记录搜索</field>
+        <field name="model">employee.record</field>
+        <field name="arch" type="xml">
+            <search>
+                <!--定义搜索时搜索哪些字段里面的内容-->
+                <field name="name"/>
+                <field name="city"/>
+
+                <!--自定义筛选条件-->
+                <filter string="在职" name="is_working" domain="[('is_working', '=', True)]"/>
+                <filter string="离职" name="is_working" domain="[('is_working', '=', False)]"/>
+
+                <!--自定义分组-->
+                <group expand="1">
+                    <filter string="是否在职" name="is_working" context="{'group_by': 'is_working'}"/>
+                    <filter string="填报人" name="create_user_id" context="{'group_by': 'create_user_id'}"/>
+                    <filter string="按省划分" name="state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!--透视表-->
+    <record id="employee_record_pivot_view" model="ir.ui.view">
+        <field name="name">员工记录透视表</field>
+        <field name="model">employee.record</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <!--row纵向展开,measure总计的字段,col按列行分组-->
+                <field name="is_working" type="row"/>
+                <field name="state" type="col"/>
+                <!--<field name="test_float" type="measure"/>-->
+                <!--<field name="test_int" type="measure"/>-->
+            </pivot>
+        </field>
+    </record>
+
+    <!--graph图表-->
+    <record id="employee_record_graph_view" model="ir.ui.view">
+        <field name="name">员工记录graph图表</field>
+        <field name="model">employee.record</field>
+        <field name="arch" type="xml">
+            <graph>
+                <field name="state" type="row"/>
+                <field name="is_working" type="col"/>
+            </graph>
+
+        </field>
+    </record>
+
+
+    <record id="employee_record_act_window" model="ir.actions.act_window">
+        <field name="name">员工记录</field>
+        <field name="res_model">employee.record</field>
+        <field name="view_mode">tree,form,pivot,graph</field>
+    </record>
+
+
+    <menuitem name="员工记录" id="employee_record_menu_root" groups="base.group_user" sequence="10"/>
+
+    <menuitem name="员工记录" id="sec_employee_record_menu"
+              parent="employee_record_menu_root"
+              action="employee_record_act_window"
+              sequence="10"/>
+
+</odoo>
