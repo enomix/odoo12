@@ -1,0 +1,28 @@
+<odoo>
+    <!--act_window元素定义了一个客户端窗口操作,它将打开bangumi.bangumi模型,并按照顺序启用列表,看板和视图-->
+    <!--form视图就是点击左上角的创建后进入的视图,没有定义的时候odoo会默认生成一个form视图-->
+    <act_window
+            id="act_bangumi_view"
+            name="番剧"
+            res_model="bangumi.bangumi"
+            view_mode="tree,kanban,form"
+            view_id="view_bangumi_bangumi_list"
+    />
+    <!--上面的另外一种写法-->
+<!--    <record id="act_bangumi_view" model="ir.actions.act_window">-->
+<!--        <field name="name">Bangumi</field>-->
+<!--        <field name="res_model">bangumi.bangumi</field>-->
+<!--        <field name="view_mode">tree,kanban,form</field>-->
+<!--        <field name="view_id" ref="view_bangumi_bangumi_list"/>-->
+<!--    </record>-->
+
+    <!--menuitem定义了一个名Bangumi为主菜单,这个菜单会调用前面定义的act_bangumi_view动作,
+    并且可以看到这个菜单的权限组为base.group_user,即已登录的内部用户-->
+    <menuitem
+            id="menu_bangumi_view"
+            name="Bangumi1"
+            action="act_bangumi_view"
+            groups="base.group_user"
+    />
+
+</odoo>

@@ -1,0 +1,101 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_bangumi_bangumi_list">
+            <field name="name">bangumi.list</field>
+            <field name="model">bangumi.bangumi</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="category_id"/>
+                    <field name="tag_ids" widget="many2many_tags"/>
+                    <field name="score"/>
+                    <field name="current"/>
+                    <field name="total"/>
+                    <field name="already_seen"/>
+                    <field name="release_date"/>
+                    <field name="update_cycle"/>
+                    <field name="like"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <!--form视图就是点击左上角的创建后进入的视图,没有定义的时候odoo会默认生成一个form视图-->
+        <record model="ir.ui.view" id="view_bangumi_form">
+            <field name="name">bangumi.form</field>
+            <field name="model">bangumi.bangumi</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="cover_image" widget="image"/>
+                            <field name="category_id"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
+                            <field name="score"/>
+                        </group>
+                        <group>
+                            <field name="current"/>
+                            <field name="total"/>
+                            <field name="already_seen"/>
+                            <field name="release_date"/>
+                            <field name="update_cycle"/>
+                            <field name="like"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--搜索视图定义(在搜索框输入值之后下拉选项出现下面定义的三个搜索方向,filter_domain属性定义了搜索的域)-->
+        <record model="ir.ui.view" id="view_bangumi_bangumi_search">
+            <field name="name">bangumi.search</field>
+            <field name="model">bangumi.bangumi</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="category_id" filter_domain="[('category_id.name', 'ilike', self)]"/>
+                    <field name="tag_ids" filter_domain="[('tag_ids.name', 'ilike', self)]"/>
+                </search>
+            </field>
+        </record>
+
+        <!--看板视图-->
+        <record model="ir.ui.view" id="view_bangumi_bangumi_kanban">
+            <field name="name">bangumi.kanban</field>
+            <field name="model">bangumi.bangumi</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <!--列出要使用的field字段-->
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="release_date"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <!--img标签必须包含alt属性,否则就会报错;
+                                    通过t-att-src属性设置需要渲染的图片;
+                                    如果要渲染的图片来自具体的数据记录,需要使用kanban_image函数
+                                    kanban_image有三个参数,第一个:具体的模型,第二个图片所对应的字段,第三个:这个数据的id值-->
+                                    <img alt="Bangumi"
+                                         t-att-src="kanban_image('bangumi.bangumi', 'cover_image', record.id.raw_value)"/>
+                                </div>
+                                <div class="oe_kanban_content">
+                                    <div class="o_kanban_record_title">
+                                        <field name="name" class="o_text_overflow"/>
+                                    </div>
+                                    <div class="o_kanban_record_bottom">
+                                        <span class="oe_kanban_bottom_right">
+                                            <field name="release_date"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+    </data>
+</odoo>
