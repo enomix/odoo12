@@ -13,6 +13,7 @@ class EmployeeRecord(models.Model):
 
     name = fields.Char(string='姓名')
     sex = fields.Selection([('male', '男性'),('female', '女性')], string='性别')
+    image = fields.Binary(string='照片', attachment=True)
     age = fields.Char(string='年龄')
     date = fields.Date(string='入职日期')
     state = fields.Char(string='省')

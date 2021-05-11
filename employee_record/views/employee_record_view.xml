@@ -32,6 +32,7 @@
                 <sheet>
                     <group>
                         <group>
+                            <field name="image" string="照片" widget="image"/>
                             <!--required="1"代表了这个字段是必填项,默认是0-->
                             <field name="name" string="姓名" required="1"/>
                             <field name="date" string="入职日期" required="1"/>
@@ -91,6 +92,7 @@
                     <filter string="是否在职" name="is_working" context="{'group_by': 'is_working'}"/>
                     <filter string="填报人" name="create_user_id" context="{'group_by': 'create_user_id'}"/>
                     <filter string="按省划分" name="state" context="{'group_by': 'state'}"/>
+                    <filter string="职位" name="position" context="{'group_by': 'position'}"/>
                 </group>
             </search>
         </field>
@@ -125,10 +127,49 @@
     </record>
 
 
+    <!--看板视图-->
+          <record id="employee_record_kanban_view" model="ir.ui.view">
+            <field name="name">员工记录看板视图</field>
+            <field name="model">employee.record</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <!--列出要使用的field字段-->
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="date"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <!--img标签必须包含alt属性,否则就会报错;
+                                    通过t-att-src属性设置需要渲染的图片;
+                                    如果要渲染的图片来自具体的数据记录,需要使用kanban_image函数
+                                    kanban_image有三个参数,第一个:具体的模型,第二个图片所对应的字段,第三个:这个数据的id值-->
+                                    <img alt="EmployeeRecord"
+                                         t-att-src="kanban_image('employee.record', 'image', record.id.raw_value)"/>
+                                </div>
+                                <div class="oe_kanban_content">
+                                    <div class="o_kanban_record_title">
+                                        <field name="name" class="o_text_overflow"/>
+                                    </div>
+                                    <div class="o_kanban_record_bottom">
+                                        <span class="oe_kanban_bottom_right">
+                                            <field name="date"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
     <record id="employee_record_act_window" model="ir.actions.act_window">
         <field name="name">员工记录</field>
         <field name="res_model">employee.record</field>
-        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="view_mode">kanban,tree,form,pivot,graph</field>
     </record>
 
 
