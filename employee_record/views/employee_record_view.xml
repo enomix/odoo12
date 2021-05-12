@@ -31,35 +31,57 @@
             <form>
                 <sheet>
                     <group>
-                        <group>
-                            <field name="image" string="照片" widget="image"/>
+                        <sheet>
+
+                            <field name="image" string="照片" widget="image" class="oe_avatar"/>
                             <!--required="1"代表了这个字段是必填项,默认是0-->
-                            <field name="name" string="姓名" required="1"/>
-                            <field name="date" string="入职日期" required="1"/>
-                            <field name="is_working" string="是否在职" required="1"/>
-                            <!--invisible="1"代表了这个字段是隐藏项,默认是0-->
-                            <!--要实现动态显示使用attrs属性:里面放一个字典,根据上面的布尔类型的字段控制当前的字段是否显示-->
-                            <field name="leaving_reason" string="离职原因"
-                                   attrs="{'required': [('is_working', '=', False)], 'invisible': [('is_working', '=', True)]}"/>
-                            <field name="email" string="邮箱"
-                                   attrs="{'required': [('is_working', '=', True)], 'invisible': [('is_working', '=', False)]}"/>
-                            <field name="phone_number" string="手机"
-                                   attrs="{'required': [('is_working', '=', True)], 'invisible': [('is_working', '=', False)]}"/>
-                            <field name="position" string="职位"
-                                   attrs="{'required': [('is_working', '=', True)],  'invisible': [('is_working', '=', False)]}"/>
-                        </group>
-                        <group>
-                            <field name="sex" string="性别" required="1"/>
-                            <field name="age" string="年龄" required="1"/>
-                            <field name="state" string="省" required="1"/>
-                            <field name="city" string="市" required="1"/>
-                            <field name="country" string="区/县"/>
-                            <field name="street" string="家庭地址" required="1"/>
-                            <!--readonly="1"代表了这个字段是只读字段,不可编辑的,默认是0-->
-                            <field name="create_user_id" string="填报人" readonly="1"/>
-                            <field name="fuzhu_create_user_ids" string="辅助填报人" widget="many2many_tags"
-                                   options="{'no_create': True, 'no_edit': True}"/>
-                        </group>
+                            <div class="oe_title">
+                                <label for="name" class="oe_edit_only"/>
+                                <h1>
+                                    <field name="name"/>
+                                </h1>
+                                <h3>
+                                    <span class="oe_read_only">由</span>
+                                    <label for="create_user_id" readonly="1"/>创建
+                                </h3>
+                            </div>
+
+                            <group name="group_top">
+                                <!--左边竖排-->
+                                <group name="group_col1">
+                                    <field name="date" string="入职日期" required="1"/>
+                                    <field name="is_working" string="是否在职" required="1"/>
+                                    <!--invisible="1"代表了这个字段是隐藏项,默认是0-->
+                                    <!--要实现动态显示使用attrs属性:里面放一个字典,根据上面的布尔类型的字段控制当前的字段是否显示-->
+                                    <field name="leaving_reason" string="离职原因"
+                                           attrs="{'required': [('is_working', '=', False)], 'invisible': [('is_working', '=', True)]}"/>
+                                    <field name="email" string="邮箱"
+                                           attrs="{'required': [('is_working', '=', True)], 'invisible': [('is_working', '=', False)]}"/>
+                                    <field name="phone_number" string="手机"
+                                           attrs="{'required': [('is_working', '=', True)], 'invisible': [('is_working', '=', False)]}"/>
+                                    <field name="position" string="职位"
+                                           attrs="{'required': [('is_working', '=', True)],  'invisible': [('is_working', '=', False)]}"/>
+
+                                </group>
+                                <!--右边竖排-->
+                                <group name="group_col2">
+                                    <field name="sex" string="性别" required="1"/>
+                                    <field name="age" string="年龄" required="1"/>
+                                    <field name="state" string="省" required="1"/>
+                                    <field name="city" string="市" required="1"/>
+                                    <field name="country" string="区/县"/>
+                                    <field name="street" string="家庭地址" required="1"/>
+                                    <!--readonly="1"代表了这个字段是只读字段,不可编辑的,默认是0-->
+                                    <!--                                <field name="create_user_id" string="填报人" readonly="1"/>-->
+                                    <field name="fuzhu_create_user_ids" string="辅助填报人" widget="many2many_tags"
+                                           options="{'no_create': True, 'no_edit': True}"/>
+
+                                </group>
+                            </group>
+
+
+                        </sheet>
+
                     </group>
 
                     <!--备注的字段类型-->
@@ -120,7 +142,7 @@
         <field name="arch" type="xml">
             <graph>
                 <field name="state" type="row"/>
-                <field name="is_working" type="col"/>
+                <!--                <field name="is_working" type="col"/>-->
             </graph>
 
         </field>
@@ -128,48 +150,61 @@
 
 
     <!--看板视图-->
-          <record id="employee_record_kanban_view" model="ir.ui.view">
-            <field name="name">员工记录看板视图</field>
-            <field name="model">employee.record</field>
-            <field name="arch" type="xml">
-                <kanban>
-                    <!--列出要使用的field字段-->
-                    <field name="id"/>
-                    <field name="name"/>
-                    <field name="date"/>
-                    <templates>
-                        <t t-name="kanban-box">
-                            <div class="oe_kanban_global_click">
-                                <div class="o_kanban_image">
-                                    <!--img标签必须包含alt属性,否则就会报错;
-                                    通过t-att-src属性设置需要渲染的图片;
-                                    如果要渲染的图片来自具体的数据记录,需要使用kanban_image函数
-                                    kanban_image有三个参数,第一个:具体的模型,第二个图片所对应的字段,第三个:这个数据的id值-->
-                                    <img alt="EmployeeRecord"
-                                         t-att-src="kanban_image('employee.record', 'image', record.id.raw_value)"/>
+    <record id="employee_record_kanban_view" model="ir.ui.view">
+        <field name="name">员工记录看板视图</field>
+        <field name="model">employee.record</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <!--列出要使用的field字段-->
+                <field name="id"/>
+                <field name="name"/>
+                <field name="date"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <!--img标签必须包含alt属性,否则就会报错;
+                                通过t-att-src属性设置需要渲染的图片;
+                                如果要渲染的图片来自具体的数据记录,需要使用kanban_image函数
+                                kanban_image有三个参数,第一个:具体的模型,第二个图片所对应的字段,第三个:这个数据的id值-->
+                                <img alt="EmployeeRecord"
+                                     t-att-src="kanban_image('employee.record', 'image', record.id.raw_value)"/>
+                            </div>
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_title">
+                                    <field name="name" class="o_text_overflow"/>
                                 </div>
-                                <div class="oe_kanban_content">
-                                    <div class="o_kanban_record_title">
-                                        <field name="name" class="o_text_overflow"/>
-                                    </div>
-                                    <div class="o_kanban_record_bottom">
-                                        <span class="oe_kanban_bottom_right">
-                                            <field name="date"/>
-                                        </span>
-                                    </div>
+                                <div class="o_kanban_record_bottom">
+                                    <span class="oe_kanban_bottom_right">
+                                        <field name="date"/>入职
+                                    </span>
                                 </div>
                             </div>
-                        </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!--    日历视图-->
+    <record id="employee_record_calendar_view" model="ir.ui.view">
+        <field name="model">employee.record</field>
+        <field name="arch" type="xml">
+            <calendar date_start="date" color="name">
+                <!-- Fields used for the display text -->
+                <field name="name"/>
+                <field name="age"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
 
 
     <record id="employee_record_act_window" model="ir.actions.act_window">
         <field name="name">员工记录</field>
         <field name="res_model">employee.record</field>
-        <field name="view_mode">kanban,tree,form,pivot,graph</field>
+        <field name="view_mode">kanban,tree,form,pivot,graph,calendar</field>
     </record>
 
 
