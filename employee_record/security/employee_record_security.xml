@@ -21,7 +21,7 @@
             <field name="name">管理员</field>
             <field name="implied_ids" eval="[(4, ref('employee_record.group_base'))]"/>
             <field name="comment">管理员可以查看所有的记录</field>
-            <!--            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>-->
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
         </record>
 
     </data>
@@ -48,6 +48,6 @@
             <field name="perm_create" eval="True"/>
             <field name="perm_unlink" eval="True"/>
         </record>
-
     </data>
+
 </odoo>

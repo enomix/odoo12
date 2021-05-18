@@ -42,46 +42,111 @@
                                 </h1>
                                 <h3>
                                     <span class="oe_read_only">由</span>
-                                    <label for="create_user_id" readonly="1"/>创建
+                                    <!--readonly="1"代表了这个字段是只读字段,不可编辑的,默认是0-->
+                                    <field name="create_user_id" readonly="1"/>创建
                                 </h3>
                             </div>
 
-                            <group name="group_top">
-                                <!--左边竖排-->
-                                <group name="group_col1">
-                                    <field name="date" string="入职日期" required="1"/>
-                                    <field name="is_working" string="是否在职" required="1"/>
-                                    <!--invisible="1"代表了这个字段是隐藏项,默认是0-->
-                                    <!--要实现动态显示使用attrs属性:里面放一个字典,根据上面的布尔类型的字段控制当前的字段是否显示-->
-                                    <field name="leaving_reason" string="离职原因"
-                                           attrs="{'required': [('is_working', '=', False)], 'invisible': [('is_working', '=', True)]}"/>
-                                    <field name="email" string="邮箱"
-                                           attrs="{'required': [('is_working', '=', True)], 'invisible': [('is_working', '=', False)]}"/>
-                                    <field name="phone_number" string="手机"
-                                           attrs="{'required': [('is_working', '=', True)], 'invisible': [('is_working', '=', False)]}"/>
-                                    <field name="position" string="职位"
-                                           attrs="{'required': [('is_working', '=', True)],  'invisible': [('is_working', '=', False)]}"/>
+                            <notebook>
+                                <page name="public" string="工作信息">
+                                    <group>
+                                        <group string="联系方式">
+                                            <field name="date" string="入职日期" required="1"/>
+                                            <field name="is_working" string="是否在职" required="1"/>
+                                            <!--invisible="1"代表了这个字段是隐藏项,默认是0-->
+                                            <!--要实现动态显示使用attrs属性:里面放一个字典,根据上面的布尔类型的字段控制当前的字段是否显示-->
+                                            <field name="leaving_reason" string="离职原因"
+                                                   attrs="{'required': [('is_working', '=', False)], 'invisible': [('is_working', '=', True)]}"/>
+                                            <field name="email" string="邮箱"
+                                                   attrs="{'required': [('is_working', '=', True)], 'invisible': [('is_working', '=', False)]}"/>
+                                            <field name="phone_number" string="手机"
+                                                   attrs="{'required': [('is_working', '=', True)], 'invisible': [('is_working', '=', False)]}"/>
 
-                                </group>
-                                <!--右边竖排-->
-                                <group name="group_col2">
-                                    <field name="sex" string="性别" required="1"/>
-                                    <field name="age" string="年龄" required="1"/>
-                                    <field name="state" string="省" required="1"/>
-                                    <field name="city" string="市" required="1"/>
-                                    <field name="country" string="区/县"/>
-                                    <field name="street" string="家庭地址" required="1"/>
-                                    <!--readonly="1"代表了这个字段是只读字段,不可编辑的,默认是0-->
-                                    <!--                                <field name="create_user_id" string="填报人" readonly="1"/>-->
-                                    <field name="fuzhu_create_user_ids" string="辅助填报人" widget="many2many_tags"
-                                           options="{'no_create': True, 'no_edit': True}"/>
+                                        </group>
+                                        <group string="职位">
+                                            <field name="position" string="职位"
+                                                   attrs="{'required': [('is_working', '=', True)],  'invisible': [('is_working', '=', False)]}"/>
+                                            <field name="sex" string="性别" required="1"/>
+                                            <field name="age" string="年龄" required="1"/>
+                                            <field name="state" string="省" required="1"/>
+                                            <field name="city" string="市" required="1"/>
+                                            <field name="country" string="区/县"/>
+                                            <field name="street" string="家庭地址" required="1"/>
+                                            <!--readonly="1"代表了这个字段是只读字段,不可编辑的,默认是0-->
+                                            <!--                                <field name="create_user_id" string="填报人" readonly="1"/>-->
+                                            <field name="fuzhu_create_user_ids" string="辅助填报人" widget="many2many_tags"
+                                                   options="{'no_create': True, 'no_edit': True}"/>
+                                        </group>
+                                    </group>
+                                </page>
+                                <page name="personal_information" string="个人信息">
+                                    <group>
+                                        <group string="身份 &amp; 其他信息">
+                                            <field name="sex" string="性别" required="1"/>
+                                            <field name="age" string="年龄" required="1"/>
+                                            <field name="state" string="省" required="1"/>
+                                            <field name="city" string="市" required="1"/>
+                                            <field name="country" string="区/县"/>
+                                            <field name="street" string="家庭地址" required="1"/>
+                                            <!--readonly="1"代表了这个字段是只读字段,不可编辑的,默认是0-->
+                                            <!--                                <field name="create_user_id" string="填报人" readonly="1"/>-->
+                                            <field name="fuzhu_create_user_ids" string="辅助填报人" widget="many2many_tags"
+                                                   options="{'no_create': True, 'no_edit': True}"/>
+                                        </group>
+                                        <!--                                        <group string="Contact Information">-->
+                                        <!--                                            <field name="sex" string="性别" required="1"/>-->
+                                        <!--                                            <field name="age" string="年龄" required="1"/>-->
+                                        <!--                                            <field name="state" string="省" required="1"/>-->
+                                        <!--                                            <field name="city" string="市" required="1"/>-->
+                                        <!--                                            <field name="country" string="区/县"/>-->
+                                        <!--                                            <field name="street" string="家庭地址" required="1"/>-->
+                                        <!--                                            &lt;!&ndash;readonly="1"代表了这个字段是只读字段,不可编辑的,默认是0&ndash;&gt;-->
+                                        <!--                                            &lt;!&ndash;                                <field name="create_user_id" string="填报人" readonly="1"/>&ndash;&gt;-->
+                                        <!--                                            <field name="fuzhu_create_user_ids" string="辅助填报人" widget="many2many_tags"-->
+                                        <!--                                                   options="{'no_create': True, 'no_edit': True}"/>-->
+                                        <!--                                        </group>-->
 
-                                </group>
-                            </group>
+
+                                    </group>
+                                </page>
+                            </notebook>
+
+
+                            <!--                            &lt;!&ndash;左右排列方式&ndash;&gt;-->
+                            <!--                            <group name="group_top">-->
+                            <!--                                &lt;!&ndash;左边竖排&ndash;&gt;-->
+                            <!--                                <group name="group_col1">-->
+                            <!--                                    <field name="date" string="入职日期" required="1"/>-->
+                            <!--                                    <field name="is_working" string="是否在职" required="1"/>-->
+                            <!--                                    &lt;!&ndash;invisible="1"代表了这个字段是隐藏项,默认是0&ndash;&gt;-->
+                            <!--                                    &lt;!&ndash;要实现动态显示使用attrs属性:里面放一个字典,根据上面的布尔类型的字段控制当前的字段是否显示&ndash;&gt;-->
+                            <!--                                    <field name="leaving_reason" string="离职原因"-->
+                            <!--                                           attrs="{'required': [('is_working', '=', False)], 'invisible': [('is_working', '=', True)]}"/>-->
+                            <!--                                    <field name="email" string="邮箱"-->
+                            <!--                                           attrs="{'required': [('is_working', '=', True)], 'invisible': [('is_working', '=', False)]}"/>-->
+                            <!--                                    <field name="phone_number" string="手机"-->
+                            <!--                                           attrs="{'required': [('is_working', '=', True)], 'invisible': [('is_working', '=', False)]}"/>-->
+                            <!--                                    <field name="position" string="职位"-->
+                            <!--                                           attrs="{'required': [('is_working', '=', True)],  'invisible': [('is_working', '=', False)]}"/>-->
+
+                            <!--                                </group>-->
+                            <!--                                &lt;!&ndash;右边竖排&ndash;&gt;-->
+                            <!--                                <group name="group_col2">-->
+                            <!--                                    <field name="sex" string="性别" required="1"/>-->
+                            <!--                                    <field name="age" string="年龄" required="1"/>-->
+                            <!--                                    <field name="state" string="省" required="1"/>-->
+                            <!--                                    <field name="city" string="市" required="1"/>-->
+                            <!--                                    <field name="country" string="区/县"/>-->
+                            <!--                                    <field name="street" string="家庭地址" required="1"/>-->
+                            <!--                                    &lt;!&ndash;readonly="1"代表了这个字段是只读字段,不可编辑的,默认是0&ndash;&gt;-->
+                            <!--                                    &lt;!&ndash;                                <field name="create_user_id" string="填报人" readonly="1"/>&ndash;&gt;-->
+                            <!--                                    <field name="fuzhu_create_user_ids" string="辅助填报人" widget="many2many_tags"-->
+                            <!--                                           options="{'no_create': True, 'no_edit': True}"/>-->
+                            <!--                                </group>-->
+                            <!--                            </group>-->
 
 
                         </sheet>
-
                     </group>
 
                     <!--备注的字段类型-->
