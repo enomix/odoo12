@@ -20,6 +20,7 @@
         'views/employee_record_view.xml',
         'security/ir.model.access.csv',
         'views/employee_record_template.xml',
+        'reports/employee_report.xml',
     ],
     # 'installable': True,
     'application': True,

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!--声明一个新的报表，可以在Settings > Technical > Actions >Reports菜单里面查看，页面也会出现一个打印的按钮-->
+    <report id="employee_report"
+            string="员工信息"
+            model="employee.record"
+            report_type="qweb-pdf"
+            name="employee_record.employee_record_template"/>
+
+    <template id="employee_record_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <!--报告标题内容-->
+                    <div class="container">
+                        <div class="row bg-primary">
+
+                            <div class="col-3">姓名</div>
+                            <div class="col-2">年龄</div>
+                            <div class="col-2">入职日期</div>
+                            <div class="col-3">邮箱</div>
+                            <div class="col-3">头像</div>
+                        </div>
+
+                        <t t-foreach="docs" t-as="o">
+                            <div class="row">
+                                <!--报告行内容-->
+
+                                <div class="col-3">
+                                    <h4>
+                                        <span t-field="o.name"/>
+                                    </h4>
+                                </div>
+                                <div class="col-2">
+                                    <span t-field="o.age"/>
+                                </div>
+                                <div class="col-2">
+                                    <span t-field="o.date"
+                                          t-options="{'widget': 'date'}"/>
+                                </div>
+                                <div class="col-3">
+                                    <span t-field="o.email"/>
+                                </div>
+                                <div class="col-2">
+                                    <span t-field="o.image"
+                                          t-options="{'widget': 'image'}"/>
+                                </div>
+                                <div class="col-2">
+                                    <!-- Render authors -->
+                                </div>
+
+                            </div>
+                        </t>
+                        <!--报告页脚内容-->
+
+                    </div>
+
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

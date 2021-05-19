@@ -273,7 +273,10 @@
     </record>
 
 
-    <menuitem name="员工记录" id="employee_record_menu_root" groups="base.group_user" sequence="10"/>
+    <menuitem name="员工记录" id="employee_record_menu_root"
+              groups="base.group_user"
+              sequence="10"
+              web_icon="employee_record,static/img/员工管理1.png"/>
 
     <menuitem name="员工记录" id="sec_employee_record_menu"
               parent="employee_record_menu_root"
